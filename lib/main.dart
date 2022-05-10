@@ -1,45 +1,79 @@
 import 'package:flutter/material.dart';
+import 'dart:math';
 
 void main() {
-  runApp(MyApp());
+  runApp(Dice());
 }
 
-class MyApp extends StatelessWidget {
+class Dice extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
         backgroundColor: Colors.teal.shade500,
-        body: SafeArea(
-          child: Column(
-            children: [
-              CircleAvatar(
-                radius: 50.0,
-                backgroundImage: AssetImage('assets/arun.png'),
-              ),
-              Text(
-                "Arun Kumar",
-                style: TextStyle(
-                  fontSize: 28,
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
-                  fontFamily: 'Macondo',
-                ),
-              ),
-              Text(
-                "Flutter Developer",
-                style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.teal.shade200,
-                  letterSpacing: 2.5,
-                ),
-              ),
-            ],
-          ),
+        appBar: AppBar(
+          title: Text("Just Roll"),
+          backgroundColor: Colors.teal.shade500,
         ),
+        body: DicePage(),
       ),
     );
   }
 }
+
+
+class DicePage extends StatefulWidget {
+
+  @override
+  State<DicePage> createState() => _DicePageState();
+}
+
+class _DicePageState extends State<DicePage> {
+
+  int diceno1 = 1;
+  int diceno2 = 2;
+
+   RollDice () {
+    return setState(() {
+      diceno1 = Random().nextInt(5) +1;
+      diceno2 = Random().nextInt(5) +1;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+
+
+    return Center(
+      child: Row(
+          children: [
+            Expanded(
+               child: FlatButton(
+                 onPressed: () {
+                   setState(() {
+                     RollDice();
+                   });
+                 },
+                 child: Image.asset(
+                     'assets/dice$diceno1.png'
+                 ),
+               ),
+            ),
+            const SizedBox(
+              width: 20.0,
+            ),
+            Expanded(
+                child: FlatButton(
+                    onPressed: () { RollDice(); },
+                    child: Image.asset(
+                        'assets/dice$diceno2.png'
+                    ),
+                ),
+            ),
+          ],
+      ),
+    );
+  }
+}
+
